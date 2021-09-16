@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import os
 import requests
 import time
@@ -17,55 +11,16 @@ search_url = "https://ww.9anime2.com/search/"
 watch_url = "https://ww.9anime2.com/watch/"
 base = "https://ww.9anime2.com"
 
-
-# In[ ]:
-
-
-
-
-
-# In[2]:
-
-
 anime = input("Enter Anime Name : ")
 search_term = "%20".join(anime.split())
-
-
-# In[ ]:
-
-
-
-
-
-# In[3]:
-
 
 url = search_url+search_term
 r = requests.get(url)
 soup = BeautifulSoup(r.text, features="lxml")
 
-
-# In[ ]:
-
-
-
-
-
-# In[4]:
-
-
 titles = soup.find("ul", {"class": "anime-list"})
 anime_list = titles.find_all("li")
 title_list = ["\t".join(i.text.replace("\ndub","").replace(" Series","").replace("Special ","Special").split("\n")[3:]) for i in anime_list]
-
-
-# In[ ]:
-
-
-
-
-
-# In[5]:
 
 
 print()
@@ -73,9 +28,6 @@ print(str(len(title_list)) + " Results found matching name : " + anime)
 print("\nIndex \t Type \t Name\n")
 for i in range(len(title_list)):
     print(str(i+1) + "\t " + title_list[i])
-
-
-# In[6]:
 
 
 print()
@@ -87,28 +39,16 @@ r = requests.get(url)
 soup = BeautifulSoup(r.text, features="lxml")
 
 
-# In[7]:
-
-
 episodes = soup.find("ul", {"class": "episodes"})
 noe = len(episodes.find_all('li'))
-
-
-# In[8]:
 
 
 print('\n-------------------------\n')
 print("Number of downloadable episodes in the series : " + str(noe))
 
 
-# In[9]:
-
-
 choice = input("\nEnter episode(s) to be downloaded (space-separatred): ")
 choice = re.sub("[^0-9]", " ", choice)
-
-
-# In[10]:
 
 
 choices = choice.split()
@@ -120,33 +60,12 @@ for i in choices:
         print()
 
 
-# In[11]:
-
-
 choices = list(sorted(set(choices)))
-
-
-# In[12]:
 
 
 DOWNLOAD_LINKS = []
 print('\n-------------------------\n')
 print("Collecting download links \n")
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[13]:
 
 
 for i in tqdm(choices):
@@ -165,9 +84,6 @@ for i in tqdm(choices):
     
 
 
-# In[14]:
-
-
 def download(link, filename):
     m3u8_file = link +"index.m3u8"
     m3u8_data = requests.get(m3u8_file)
@@ -180,119 +96,15 @@ def download(link, filename):
             f.write(r.content)
 
 
-# In[ ]:
-
-
-
-
-
-# In[15]:
-
-
 print('\n-------------------------\n')
 print("Initiating Download \n")
 
 
-# In[17]:
-
-
-for i in range(len(DOWNLOAD_LINKS)):
     print("Downloading ep "+choices[i])
     download(DOWNLOAD_LINKS[i], suffix + "_episode_"+choices[i])
-
-
-# In[ ]:
 
 
 print("\nDOWNLOAD FINISHED !! ")
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
 input()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
